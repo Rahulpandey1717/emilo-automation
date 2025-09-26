@@ -11,6 +11,7 @@ EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print("project root path--",project_root)
 media_folder = os.path.join(project_root, "media")
 image_file = os.path.join(media_folder, "sample_image.jpg")
 video_file = os.path.join(media_folder, "sample_video.mp4.mp4")
@@ -58,6 +59,7 @@ def create_post(text=None, media_path=None):
             driver.find_element(By.CSS_SELECTOR, "button.flex.items-center.gap-2.text-sm.px-4.py-2.rounded-lg.bg-purple-50").click()
             # Directly use input[type='file'] for upload
             file_input = driver.find_element(By.CSS_SELECTOR, "input[type='file']")
+            print("file input---",file_input,media_path)
             file_input.send_keys(media_path)
 
 

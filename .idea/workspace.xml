@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ec3d71ba-a8a8-4ddf-afde-2b30559e36c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/Createpost.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/Createpost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/Like.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/Like.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/screenshots/login_failed.png" beforeDir="false" afterPath="$PROJECT_DIR$/page/screenshots/login_failed.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/screenshots/post_failed.png" beforeDir="false" afterPath="$PROJECT_DIR$/page/screenshots/post_failed.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/reports/report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/post_failed.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/post_failed.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_flow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +46,7 @@
     "Python tests.Python tests for login_page.test_login.executor": "Run",
     "Python tests.Python tests for login_page.test_login_and_post.executor": "Run",
     "Python tests.Python tests for login_page.test_login_flow.executor": "Run",
+    "Python tests.Python tests for test_flow.test_full_social_flow.executor": "Run",
     "Python tests.Python tests for test_flow.test_social_media_flow.executor": "Run",
     "Python tests.Python tests in login_page.py.executor": "Run",
     "Python tests.Python tests in test_flow.py.executor": "Run",
@@ -65,7 +71,7 @@
       <recent name="C:\Users\Rahul\PycharmProjects\emilo-socialmedia-selenium" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.login_page (1)">
+  <component name="RunManager" selected="Python.Createpost">
     <configuration name="Comment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="emilo-socialmedia-selenium" />
       <option name="ENV_FILES" value="" />
@@ -80,6 +86,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/page/Comment.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Createpost" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="emilo-socialmedia-selenium" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/page" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/page/Createpost.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -132,54 +160,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="login_page (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_flow.test_full_social_flow" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="emilo-socialmedia-selenium" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/page" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/page/login_page.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="login_page" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="emilo-socialmedia-selenium" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/page" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Rahul\PycharmProjects\emilo-socialmedia-selenium\page\login_page.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_flow.test_full_social_flow&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.login_page (1)" />
-        <item itemvalue="Python.login_page" />
+        <item itemvalue="Python.Createpost" />
+        <item itemvalue="Python tests.Python tests for test_flow.test_full_social_flow" />
         <item itemvalue="Python.Like" />
         <item itemvalue="Python.Comment" />
         <item itemvalue="Python.View Posts" />

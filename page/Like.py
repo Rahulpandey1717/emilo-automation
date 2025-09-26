@@ -1,25 +1,51 @@
+import time
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from dotenv import load_dotenv
-import os
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-load_dotenv()
-EMAIL = os.getenv("EMAIL")
-PASSWORD = os.getenv("PASSWORD")
+def test_create_post_only():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    try:
+        # Open app login page
+        driver.get("https://your-socialmedia-app.com/login")  # Replace with your app URL
 
-driver = webdriver.Chrome()
-driver.get("https://emilo-live-stream-front.vercel.app/login")
-time.sleep(2)
+        # --- LOGIN ---
+        WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located((By.NAME, "username"))
+        ).send_keys("your_username")  # Replace with your username
 
-driver.find_element(By.CSS_SELECTOR, "input[placeholder='Email']").send_keys(EMAIL)
-driver.find_element(By.CSS_SELECTOR, "input[placeholder='Password']").send_keys(PASSWORD)
-driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
-time.sleep(5)
+        driver.find_element(By.NAME, "password").send_keys("your_password")  # Replace with password
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
 
-like_button = driver.find_element(By.CSS_SELECTOR, "body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > main:nth-child(2) > section:nth-child(2) > section:nth-child(1) > div:nth-child(2) > div:nth-child(4) > button:nth-child(1) > div:nth-child(1) > svg:nth-child(1)")
-like_button.click()
+        print("Login completed.")
 
-print("Post liked!")
+        # --- CREATE POST ---
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "button#create-post"))
+        ).click()  # Adjust selector for "Create Post" button
 
-driver.quit()
+        WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "textarea[placeholder='Write something...']"))
+        ).send_keys("This is an automated post with media.")
+
+        # Attach image
+        driver.find_element(By.CSS_SELECTOR, "input[type='file'][accept*='image']").send_keys(
+            r"C:\Users\Rahul\Pictures\test_image.jpg"
+        )
+
+        # Attach video
+        driver.find_element(By.CSS_SELECTOR, "input[type='file'][accept*='video']").send_keys(
+            r"C:\Users\Rahul\Videos\test_video.mp4"
+        )
+
+        # Submit post
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+        print("Post created successfully.")
+
+        time.sleep(5)  # Wait a bit to ensure post is created
+
+    finally:
+        driver.quit()
