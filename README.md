@@ -21,23 +21,28 @@ Tests are written in **Python** using **Selenium WebDriver** and executed with *
 - Python 3.11+ installed  
 - Chrome browser installed  
 - ChromeDriver installed and in PATH  
-- Required Python packages:
+
+### Required Python packages:
 ```bash
 pip install -r requirements.txt
-
-##Packages include:
+Packages include:
 
 selenium
-pytest
-pytest-html
-python-dotenv
-.env file with credentials (optional):
 
+pytest
+
+pytest-html
+
+python-dotenv
+
+Optional .env file with credentials:
+ini
+Copy code
 EMAIL=testuser_1758642529337@example.com
 PASSWORD=Password123
-
 Project Structure
-
+bash
+Copy code
 emilo-socialmedia-selenium/
 │
 ├─ page/                   # Page Object Models (e.g., login_page.py, register_page.py, Create_text_post.py, Image_post.py, Create_video_post.py)
@@ -48,45 +53,63 @@ emilo-socialmedia-selenium/
 ├─ .env                    # Environment variables (email, password)
 ├─ requirements.txt        # Python dependencies
 └─ README.md               # Project documentation
-
 Running Automated Tests
 1. Activate your virtual environment
+Windows:
 
-Windows: .venv\Scripts\activate
-Mac/Linux:source .venv/bin/activate
+powershell
+Copy code
+.venv\Scripts\activate
+Mac/Linux:
 
+bash
+Copy code
+source .venv/bin/activate
 2. Run all tests and generate HTML report
+bash
+Copy code
 pytest --html=reports/report.html --self-contained-html
-
 3. Open the report
 Navigate to reports/report.html in your project folder and open it in your browser to view test results.
 
 Test Execution Order
 Tests are designed to be modular, but full social media flow can be run as a single test:
+
 Register user
+
 Login
+
 Create text, image, and video posts
+
 Like & comment on the latest post
+
 Print flow completion message
+
 Individual tests (register, login, text/image/video posts, like/comment) can also be run separately.
 
 Adding New Tests
 Add a new test function in tests/test_flow.py
+
 Use the driver fixture to get Selenium WebDriver
+
 Use proper CSS selectors or XPaths for elements
+
 Add assertions to verify functionality
 
 Troubleshooting
 ChromeDriver version mismatch: Make sure ChromeDriver matches your Chrome version
+
 TimeoutException: Increase WebDriverWait duration or check element selectors
+
 Environment variables not loading: Ensure .env is in project root and load_dotenv() is called
 
 GitHub Repository
 https://github.com/Rahulpandey1717/emilo-automation
 
-Updated Notes:
+✅ Notes:
 
-README reflects the new project structure (text/image/video posts, like & comment).
+This README reflects the latest project structure (text/image/video posts, like & comment flow).
+
 Instructions for running tests via pytest are included.
-Folder media/ added in structure to show image/video dependencies.
 
+Folder media/ contains image/video files required for tests.
