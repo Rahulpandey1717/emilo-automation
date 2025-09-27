@@ -1,25 +1,49 @@
-# page/login_page.py
 
+
+from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
+import os
 import time
 
-class LoginPage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.url = "https://emilo-live-stream-front.vercel.app/login"
-        self.email_input = "input[placeholder='Email']"
-        self.password_input = "input[placeholder='Password']"
-        self.submit_button = "button[type='submit']"
 
-    def open(self):
-        """Open the login page"""
-        self.driver.get(self.url)
-        self.driver.maximize_window()
-        time.sleep(2)  # wait for page load
+load_dotenv()
+EMAIL = os.getenv("EMAIL")
+PASSWORD = os.getenv("PASSWORD")
 
-    def login(self, email, password):
-        """Perform login with email and password"""
-        self.driver.find_element(By.CSS_SELECTOR, self.email_input).send_keys(email)
-        self.driver.find_element(By.CSS_SELECTOR, self.password_input).send_keys(password)
-        self.driver.find_element(By.CSS_SELECTOR, self.submit_button).click()
-        time.sleep(5)  # wait for login to complete
+driver = webdriver.Chrome()
+driver.maximize_window()
+
+driver.get("https://emilo-task.vercel.app/login")
+time.sleep(2)
+
+driver.find_element(By.CSS_SELECTOR, "input[placeholder='Email']").send_keys(EMAIL)
+driver.find_element(By.CSS_SELECTOR, "input[placeholder='Password']").send_keys(PASSWORD)
+driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+print("✅ Login executed successfully!")
+
+post_img = WebDriverWait(driver, 20).until(
+    EC.presence_of_element_located(
+        (By.CSS_SELECTOR, "body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > main:nth-child(2) > section:nth-child(2) > section:nth-child(1) > div:nth-child(2) > img:nth-child(3)")
+    )
+)
+
+for y in range(0, 500, 100):
+    driver.execute_script("document.querySelector('html').scrollTo(0, arguments[0]);", y)
+    time.sleep(0.3)
+
+driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", post_img)
+time.sleep(1)
+
+post_container = post_img.find_element(By.XPATH, "..")
+post_text = post_container.text
+
+print("Post Text:", post_text)
+print("Post Image URL:", post_img.get_attribute("src"))
+print("✅ Post viewed successfully!")
+
+time.sleep(5)
+
+driver.quit()

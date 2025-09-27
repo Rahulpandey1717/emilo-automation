@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec3d71ba-a8a8-4ddf-afde-2b30559e36c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page/Createpost.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/Createpost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page/Like.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/Like.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page/screenshots/login_failed.png" beforeDir="false" afterPath="$PROJECT_DIR$/page/screenshots/login_failed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page/screenshots/post_failed.png" beforeDir="false" afterPath="$PROJECT_DIR$/page/screenshots/post_failed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/reports/report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/post_failed.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/post_failed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_flow.py" afterDir="false" />
-    </list>
+    <list default="true" id="ec3d71ba-a8a8-4ddf-afde-2b30559e36c4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

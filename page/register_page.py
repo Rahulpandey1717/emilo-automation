@@ -2,19 +2,20 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
+
 full_name = input("Enter full name: ")
 email = input("Enter email: ")
 password = input("Enter password: ")
 
 if len(password) < 6:
-    print("Password must be at least 6 characters. Registration aborted.")
+    print("❌ Password must be at least 6 characters. Registration aborted.")
     exit()
 
 driver = webdriver.Chrome()
 driver.maximize_window()
-driver.get("https://emilo-live-stream-front.vercel.app/login")
+driver.get("https://emilo-task.vercel.app/login")
 
-driver.find_element(By.CSS_SELECTOR, "a[class='underline text-white hover:text-purple-300']").click()
+driver.find_element(By.CSS_SELECTOR, "a.underline.text-white").click()
 time.sleep(2)
 
 driver.find_element(By.CSS_SELECTOR, "input[placeholder='Full Name']").send_keys(full_name)
@@ -27,8 +28,8 @@ time.sleep(3)
 
 notifications = driver.find_elements(By.CSS_SELECTOR, "section[aria-label='Notifications Alt+T']")
 if notifications:
-    print("Registration failed! Notification detected.")
+    print("❌ Registration failed! Notification detected.")
 else:
-    print("Registration completed successfully!")
+    print("✅ Registration completed successfully!")
 
 driver.quit()

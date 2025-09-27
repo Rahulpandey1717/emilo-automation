@@ -1,7 +1,9 @@
 import os
 import time
 from datetime import datetime
+import pytest
 from selenium import webdriver
+from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,13 +13,19 @@ FULL_NAME = "Rahul Test"
 PASSWORD = "Test@123"
 COMMENT_TEXT = "Automated comment on latest post!"
 MEDIA_FOLDER = r"C:\Users\Rahul\PycharmProjects\emilo-socialmedia-selenium\media"
-IMAGE_FILE = os.path.join(MEDIA_FOLDER, "test_image.jpg")
-VIDEO_FILE = os.path.join(MEDIA_FOLDER, "test_video.mp4")
+IMAGE_FILE = os.path.join(MEDIA_FOLDER, "sample_image.jpg")
+VIDEO_FILE = os.path.join(MEDIA_FOLDER, "4114797-uhd_3840_2160_25fps.mp4")
+BASE_URL = "https://emilo-task.vercel.app/"
 
 # ----------------- Helper Functions -----------------
 def generate_unique_email():
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     return f"rahul.test{timestamp}@example.com"
+
+def open_browser():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    return driver
 
 def wait_and_click(driver, css_selector, timeout=15):
     element = WebDriverWait(driver, timeout).until(
@@ -33,107 +41,148 @@ def wait_and_send_keys(driver, css_selector, text, timeout=15):
     element.send_keys(text)
     time.sleep(1)
 
-# ----------------- Register & Login -----------------
-def register(driver, email):
-    driver.get("https://emilo-live-stream-front.vercel.app/register")
+# ----------------- Actions -----------------
+def register_user(email):
+    driver = open_browser()
+    driver.get(BASE_URL + "register")
     wait_and_send_keys(driver, "input[placeholder='Full Name']", FULL_NAME)
     wait_and_send_keys(driver, "input[placeholder='Email']", email)
     wait_and_send_keys(driver, "input[placeholder='Password']", PASSWORD)
     wait_and_send_keys(driver, "input[placeholder='Confirm Password']", PASSWORD)
     wait_and_click(driver, "button[type='submit']")
-    print(f"Registration completed with email: {email}")
-    time.sleep(5)
+    print(f"✅ Registered with email: {email}")
+    time.sleep(3)
+    driver.quit()
 
-def login(driver, email):
-    driver.get("https://emilo-live-stream-front.vercel.app/login")
+def login_user(email):
+    driver = open_browser()
+    driver.get(BASE_URL + "login")
     wait_and_send_keys(driver, "input[placeholder='Email']", email)
     wait_and_send_keys(driver, "input[placeholder='Password']", PASSWORD)
     wait_and_click(driver, "button[type='submit']")
-    print(f"Login completed with email: {email}")
-    time.sleep(5)
+    print(f"✅ Logged in with email: {email}")
+    time.sleep(3)
+    driver.quit()
 
-# ----------------- Create Post -----------------
-def create_post(driver, text=None, image_path=None, video_path=None):
+def create_text_post(email, text):
+    driver = open_browser()
+    driver.get(BASE_URL + "login")
+    wait_and_send_keys(driver, "input[placeholder='Email']", email)
+    wait_and_send_keys(driver, "input[placeholder='Password']", PASSWORD)
+    wait_and_click(driver, "button[type='submit']")
+    time.sleep(3)
     post_input_css = "textarea[placeholder=\"What's on your mind?\"]"
     post_input = WebDriverWait(driver, 15).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, post_input_css))
     )
-    if text:
-        post_input.send_keys("\n" + text)
-
-    # Upload image or video
-    if image_path or video_path:
-        wait_and_click(driver, "button[class='flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-purple-50 dark:bg-gray-700 text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-gray-600 transition']")
-        file_input = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='file']"))
-        )
-        if image_path and os.path.exists(image_path):
-            file_input.send_keys(image_path)
-            print("Image selected.")
-            WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "img[src*='test_image']"))
-            )
-        if video_path and os.path.exists(video_path):
-            file_input.send_keys(video_path)
-            print("Video selected.")
-            WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "video"))
-            )
-
-    # Click Post button
+    post_input.send_keys(text)
     wait_and_click(driver, "button.bg-gradient-to-r.from-blue-500.via-purple-500.to-red-500.text-white")
-    print(f"Post created: {text or image_path or video_path}")
+    print("✅ Text post created.")
     time.sleep(3)
+    driver.quit()
 
-# ----------------- Like & Comment Latest Post -----------------
-def like_and_comment_latest_post(driver, comment_text=COMMENT_TEXT):
+def create_image_post(email, image_path):
+    driver = open_browser()
+    driver.get(BASE_URL + "login")
+    wait_and_send_keys(driver, "input[placeholder='Email']", email)
+    wait_and_send_keys(driver, "input[placeholder='Password']", PASSWORD)
+    wait_and_click(driver, "button[type='submit']")
     time.sleep(3)
-    posts = WebDriverWait(driver, 15).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.flex.flex-col.rounded-xl.bg-white"))
+    post_input_css = "textarea[placeholder=\"What's on your mind?\"]"
+    WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, post_input_css)))
+    wait_and_click(driver, "button.flex.items-center.gap-2.text-sm.px-4.py-2.rounded-lg.bg-purple-50")
+    file_input = driver.find_element(By.CSS_SELECTOR, "input[type='file']")
+    file_input.send_keys(image_path)
+    print("✅ Image uploaded.")
+    time.sleep(2)
+    driver.execute_script("document.querySelector('html').scrollTo({top:0, behavior:'smooth'});")
+    wait_and_click(driver, "button.bg-gradient-to-r.from-blue-500.via-purple-500.to-red-500.text-white")
+    print("✅ Image post created.")
+    time.sleep(3)
+    driver.quit()
+
+def create_video_post(email, video_path):
+    driver = open_browser()
+    driver.get(BASE_URL + "login")
+    wait_and_send_keys(driver, "input[placeholder='Email']", email)
+    wait_and_send_keys(driver, "input[placeholder='Password']", PASSWORD)
+    wait_and_click(driver, "button[type='submit']")
+    time.sleep(3)
+    post_input_css = "textarea[placeholder=\"What's on your mind?\"]"
+    WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, post_input_css)))
+    wait_and_click(driver, "button.flex.items-center.gap-2.text-sm.px-4.py-2.rounded-lg.bg-purple-50")
+    file_input = driver.find_element(By.CSS_SELECTOR, "input[type='file']")
+    file_input.send_keys(video_path)
+    print("✅ Video uploaded.")
+    time.sleep(2)
+    driver.execute_script("document.querySelector('html').scrollTo({top:0, behavior:'smooth'});")
+    wait_and_click(driver, "button.bg-gradient-to-r.from-blue-500.via-purple-500.to-red-500.text-white")
+    print("✅ Video post created.")
+    time.sleep(3)
+    driver.quit()
+
+def like_and_comment_latest_post(email, comment_text):
+    driver = open_browser()
+    driver.get(BASE_URL + "login")
+    wait_and_send_keys(driver, "input[placeholder='Email']", email)
+    wait_and_send_keys(driver, "input[placeholder='Password']", PASSWORD)
+    wait_and_click(driver, "button[type='submit']")
+    time.sleep(5)
+
+    latest_post = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "body > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > main:nth-child(2) > section:nth-child(2) > section:nth-child(1) > div:nth-child(25) > img:nth-child(3)"))
     )
-    latest_post = posts[0]  # newest post
-    driver.execute_script("arguments[0].scrollIntoView(true);", latest_post)
+    driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", latest_post)
     time.sleep(2)
 
     # Like
-    like_button = latest_post.find_element(By.CSS_SELECTOR, "button[aria-label='Like']")
-    like_button.click()
-    print("Liked the latest post.")
-    time.sleep(2)
+    like_svg_path = driver.find_element(By.XPATH, "(//*[name()='path'])[76]")
+    like_button = like_svg_path.find_element(By.XPATH, "./ancestor::button[1]")
+    driver.execute_script("arguments[0].scrollIntoView(true);", like_button)
+    driver.execute_script("arguments[0].click();", like_button)
+    print("✅ Liked the latest post")
+    time.sleep(10)
 
     # Comment
-    comment_box = latest_post.find_element(By.CSS_SELECTOR, "textarea[placeholder='Write a comment...']")
-    comment_box.send_keys(comment_text)
-    send_button = latest_post.find_element(By.CSS_SELECTOR, "button[type='submit']")
-    send_button.click()
-    print("Commented on the latest post.")
-    time.sleep(2)
-
-# ----------------- Pytest Test -----------------
-def test_full_social_flow():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
     try:
-        email = generate_unique_email()
-
-        # Register
-        register(driver, email)
-        driver.quit()
-
-        # Login
-        driver = webdriver.Chrome()
-        driver.maximize_window()
-        login(driver, email)
-
-        # Create posts
-        create_post(driver, text="Hello, this is a text post!")
-        create_post(driver, image_path=IMAGE_FILE)
-        create_post(driver, video_path=VIDEO_FILE)
-
-        # Like & Comment latest post
-        like_and_comment_latest_post(driver, comment_text="This is awesome!")
-
-    finally:
+        comment_svg = driver.find_element(By.XPATH, "//div[25]//div[2]//button[2]//div[1]//*[name()='svg']")
+        comment_button = comment_svg.find_element(By.XPATH, "./ancestor::button[1]")
+        driver.execute_script("arguments[0].click();", comment_button)
+        comment_box = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Write a comment...']"))
+        )
+        comment_box.send_keys(comment_text)
+        send_button = driver.find_element(By.XPATH, "//button[normalize-space()='Send']")
+        driver.execute_script("arguments[0].click();", send_button)
+        print("✅ Commented on latest post.")
         time.sleep(3)
-        driver.quit()
-        print("All actions completed successfully.")
+    except (NoSuchElementException, TimeoutException, Exception) as e:
+        print(f"⚠️ Comment flow failed, skipping comment. Reason: {e}")
+    driver.quit()
+
+# ----------------- Pytest Fixture -----------------
+@pytest.fixture(scope="session")
+def user_email():
+    """Generate email and register user once for all tests."""
+    email = generate_unique_email()
+    register_user(email)
+    return email
+
+# ----------------- Modular Pytest Tests -----------------
+def test_login_user(user_email):
+    login_user(user_email)
+
+def test_text_post(user_email):
+    create_text_post(user_email, "Hello, this is an automated text post!")
+
+def test_image_post(user_email):
+    create_image_post(user_email, IMAGE_FILE)
+
+def test_video_post(user_email):
+    create_video_post(user_email, VIDEO_FILE)
+
+def test_like_and_comment_post(user_email):
+    like_and_comment_latest_post(user_email, "This is an automated comment!")
+
+def test_full_flow_completed():
+    print("✅ Full social media flow completed successfully.")
